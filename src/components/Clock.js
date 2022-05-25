@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 export default function Clock(props) {
   const [time, setTime] = useState(
-    DateTime.fromISO("2021-12-01T06:58:33.988648+00:00")
+    DateTime.fromISO("2022-31-05T06:58:33.988648+00:00")
   );
   useEffect(() => {
     const id = setInterval(async () => {
@@ -14,7 +14,7 @@ export default function Clock(props) {
     };
   }, [time]);
   const getTimeAPI = async () => {
-    fetch("http://worldtimeapi.org/api/timezone/Asia/Ho_Chi_Minh")
+    fetch("https://worldtimeapi.org/api/timezone/Asia/Ho_Chi_Minh")
       .then((response) => {
         if (response.status === 200) {
           response.json().then(async (data) => {
