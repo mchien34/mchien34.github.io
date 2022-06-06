@@ -11,7 +11,6 @@ import bg_1 from "./assets/backgroundlogin.jpg";
 const App = () => {
   const [isAuth, setIsAuth] = useState(false);
   const [alert, setAlert] = useState(null);
-  console.log('Hello');
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
