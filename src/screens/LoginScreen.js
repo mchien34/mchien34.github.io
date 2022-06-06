@@ -4,7 +4,8 @@ import Form from "react-bootstrap/Form";
 import AlertMessageLogin from "../components/AlertMessageLogin";
 import Title from "../components/Title";
 import { ColorConstant } from "../value/color_constant";
-import { Constant } from "../value/constant";
+import bg_1 from "../assets/backgroundlogin.jpg";
+
 
 function LoginScreen() {
   const [alert, setAlert] = useState(null);
@@ -32,7 +33,8 @@ function LoginScreen() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "aquamarine"
+        backgroundImage: `url(${bg_1})` ,
+        backgroundSize :'cover',
       }}
     >
       <Title></Title>
@@ -106,9 +108,8 @@ function LoginScreen() {
             variant="success"
             type="submit"
             style={{
-              height: 20,
+              height: 45,
               width: 200,
-              // height: 45,
               fontSize: 20,
               borderRadius: 10,
               borderWidth: 0,
