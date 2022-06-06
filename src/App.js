@@ -6,6 +6,8 @@ import Title from "./components/Title";
 import { ColorConstant } from "./value/color_constant";
 import HomeScreen from "./screens/HomeScreen";
 import { UserList } from "./value/userList";
+import bg_1 from "./assets/backgroundlogin.jpg";
+
 const App = () => {
   const [isAuth, setIsAuth] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -54,11 +56,13 @@ const App = () => {
         <div
           style={{
             flex: 1,
-            height: 700,
+            height: 745,
             flexDirection: "column",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            backgroundImage: `url(${bg_1})` ,
+            backgroundSize :'cover'
           }}
         >
           <Title></Title>
@@ -70,7 +74,7 @@ const App = () => {
               height: 400,
               width: 1100,
               display: "flex",
-              backgroundColor: "white",
+              backgroundColor: "#fff",
               boxShadow: "2px 5px 10px #C7C8C9FF",
               borderRadius: "10px",
               alignItems: "center",
@@ -132,9 +136,8 @@ const App = () => {
                 variant="success"
                 type="submit"
                 style={{
-                  height: 20,
-                  width: 200,
                   height: 45,
+                  width: 200,
                   fontSize: 20,
                   borderRadius: 10,
                   borderWidth: 0,

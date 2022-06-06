@@ -14,11 +14,11 @@ import bg_1 from "../assets/greenhouse.jpg";
 import LineChart from "../components/LineChart";
 
 import { Constant } from "../value/constant";
-import { DateTime } from "luxon";
+// import { DateTime } from "luxon";
 import React, { useEffect, useRef, useState } from "react";
 import Title from "../components/Title";
-// import AlertPopup from "../components/AlertPopup";
-// import Switch from "react-switch";
+import AlertPopup from "../components/AlertPopup";
+import Switch from "react-switch";
 // import { MockTest } from "../components/MockTestJSON";
 // import { MockTestPH } from "../components/MockTestJsonPH";
 // import { MockTestDissolveOxy } from "../components/MockTestJsonDissolveOxy";
@@ -29,14 +29,14 @@ import Title from "../components/Title";
 import axios from "axios";
 import "react-dropdown/style.css";
 import Select from "react-select";
-// import { checkAlert } from "../util/checkAlert";
+import { checkAlert } from "../util/checkAlert";
 const HomeScreen = () => {
   // const [time, setTime] = useState(
   //   DateTime.fromISO("2021-12-01T06:58:33.988648+00:00")
   // );
 
-  // const [isEnabledAlert, setIsEnabledAlert] = useState(true);
-  // const [isMute, setIsMute] = useState(true);
+  const [isEnabledAlert, setIsEnabledAlert] = useState(true);
+  const [isMute, setIsMute] = useState(true);
   const [temper,setTemper] = useState({
     temperature : 0,
     humidity: 0
@@ -53,10 +53,10 @@ const HomeScreen = () => {
     light: 54,
     soilMoiture: 28,
     salinity: 0,
-    // isAlertTemperature: 0,
-    // isAlertLight: 0,
-    // isAlertSoilMoiture: 0,
-    // isAlertSalinity: 0,
+    isAlertTemperature: 0,
+    isAlertLight: 0,
+    isAlertSoilMoiture: 0,
+    isAlertSalinity: 0,
     labelChart: [],
     dataChartTemperature: [],
     dataChartDissolveOxy: [],
@@ -69,10 +69,10 @@ const HomeScreen = () => {
     dissolveOxy: 54,
     pH: 28,
     salinity: 0,
-    // isAlertTemperature: 0,
-    // isAlertLight: 0,
-    // isAlertSoilMoiture: 0,
-    // isAlertSalinity: 0,
+    isAlertTemperature: 0,
+    isAlertLight: 0,
+    isAlertSoilMoiture: 0,
+    isAlertSalinity: 0,
     labelChart: [],
     dataChartTemperature: [],
     dataChartDissolveOxy: [],
@@ -85,10 +85,10 @@ const HomeScreen = () => {
     dissolveOxy: 54,
     pH: 28,
     salinity: 0,
-    // isAlertTemperature: 0,
-    // isAlertLight: 0,
-    // isAlertSoilMoiture: 0,
-    // isAlertSalinity: 0,
+    isAlertTemperature: 0,
+    isAlertLight: 0,
+    isAlertSoilMoiture: 0,
+    isAlertSalinity: 0,
     labelChart: [],
     dataChartTemperature: [],
     dataChartDissolveOxy: [],
@@ -96,20 +96,20 @@ const HomeScreen = () => {
     dataChartSalinity: [],
   });
   const intervalRef = useRef(null);
-  var mockDateTimeSecond = 10;
+  // var mockDateTimeSecond = 10;
 
   //const options = ["Ao nuôi số 1", "Ao nuôi số 2"];
   const options = [
     { value: "Khu vực 1", label: "Khu vực 1", color: "red" },
     { value: "Khu vực 2", label: "Khu vực 2", color: "red" },
   ];
-  // function handleSwitchPopupChange(checked) {
-  //   setIsEnabledAlert(checked);
-  // }
+  function handleSwitchPopupChange(checked) {
+    setIsEnabledAlert(checked);
+  }
 
-  // function handleSwitchMute(checked) {
-  //   setIsMute(checked);
-  // }
+  function handleSwitchMute(checked) {
+    setIsMute(checked);
+  }
   // function handleDropdownChange(option) {
   //   console.log("Option: ", option);
   //   const pondIndex = parseInt(option.value.substring(11, 12)) - 1;
@@ -146,6 +146,53 @@ const HomeScreen = () => {
   //     }
   //   }
   // } 
+
+  // function handleSwitchMute(checked) {
+  //   setIsMute(checked);
+  // }
+  // function handleDropdownChange(option) {
+  //   console.log("Option: ", option);
+  //   const pondIndex = parseInt(option.value.substring(11, 12)) - 1;
+  //   console.log(`Pond Index: ${pondIndex}`);
+  //   setPondSelected({ value: pondIndex });
+  // }
+
+ 
+
+  useEffect(() => {
+    function showAlert() {
+      console.log("--------------");
+      if (isEnabledAlert) {
+        //Xét switch cho phép bật Popup
+        if (
+          iotDataRender.isAlertTemperature === 2 ||
+          iotDataRender.isAlertLight === 2 ||
+          iotDataRender.isAlertSoilMoiture === 2 ||
+          iotDataRender.isAlertSalinity === 2
+        ) {
+          AlertPopup(
+            Constant.redWarning,
+            "Cảnh báo \n Có giá trị vượt ngưỡng",
+            isMute
+          );
+        } else if (
+          iotDataRender.isAlertTemperature === 1 ||
+          iotDataRender.isAlertLight === 1 ||
+          iotDataRender.isAlertSoilMoiture === 1 ||
+          iotDataRender.isAlertSalinity === 1
+        ) {
+          AlertPopup(
+            Constant.yellowWarning,
+            "Cảnh báo \n Có giá trị sắp vượt ngưỡng",
+            isMute
+          );
+        }
+      }
+    } 
+    showAlert();
+  }, [iotDataRender.isAlertLight, iotDataRender.isAlertSalinity, iotDataRender.isAlertSoilMoiture, iotDataRender.isAlertTemperature, isEnabledAlert, isMute]);//iotDataRender
+
+
   const fectchAPI1 = async () => {
     const temperatureAPI = "https://api.thingspeak.com/channels/1725772/fields/1.json";
     const salinityAPI = "https://api.thingspeak.com/channels/1725772/fields/2.json";   
@@ -220,29 +267,29 @@ const HomeScreen = () => {
         const dataObjs8 = lightData1.feeds;
         var dataLightChart1 = dataObjs8.map((dataObj8) => dataObj8.field8);
         //Simulate data
-        dataTemperatureChart[50] = parseInt(dataTemperatureChart[50]) + (DateTime.now().second + 30) / 6;
-        dataTemperatureChart[99] = parseInt(dataTemperatureChart[99]) + DateTime.now().second / 6;
+        dataTemperatureChart[50] = parseInt(dataTemperatureChart[50]);
+        dataTemperatureChart[99] = parseInt(dataTemperatureChart[99]);
 
         dataSalinityChart[50] = parseInt(dataSalinityChart[50]);
-        dataSalinityChart[99] = parseInt(dataSalinityChart[99] - DateTime.now().second / 30);
+        dataSalinityChart[99] = parseInt(dataSalinityChart[99] );
         
         dataSoilMoitureChart[50] = parseInt(dataSoilMoitureChart[50]);
-        dataSoilMoitureChart[99] = parseInt(dataSoilMoitureChart[99] - DateTime.now().second / 30);
+        dataSoilMoitureChart[99] = parseInt(dataSoilMoitureChart[99]);
        
         dataLightChart[50] = parseInt(dataLightChart[50]);
-        dataLightChart[99] = parseInt(dataLightChart[99] - DateTime.now().second /30)
+        dataLightChart[99] = parseInt(dataLightChart[99] )
         //data2
-        dataTemperatureChart1[50] = parseInt(dataTemperatureChart1[50]) + (DateTime.now().second + 30) / 6;
-        dataTemperatureChart1[99] = parseInt(dataTemperatureChart1[99]) + DateTime.now().second / 6;
+        dataTemperatureChart1[50] = parseInt(dataTemperatureChart1[50]);
+        dataTemperatureChart1[99] = parseInt(dataTemperatureChart1[99]);
 
         dataSalinityChart1[50] = parseInt(dataSalinityChart1[50]);
-        dataSalinityChart1[99] = parseInt(dataSalinityChart1[99] - DateTime.now().second / 30);
+        dataSalinityChart1[99] = parseInt(dataSalinityChart1[99]);
         
         dataSoilMoitureChart1[50] = parseInt(dataSoilMoitureChart1[50]);
-        dataSoilMoitureChart1[99] = parseInt(dataSoilMoitureChart1[99] - DateTime.now().second / 30);
+        dataSoilMoitureChart1[99] = parseInt(dataSoilMoitureChart1[99]);
         
         dataLightChart1[50] = parseInt(dataLightChart1[50]);
-        dataLightChart1[99] = parseInt(dataLightChart1[99] - DateTime.now().second /30)
+        dataLightChart1[99] = parseInt(dataLightChart1[99] )
         //Hết Simulate
 
         //Lấy phần tử cuối cùng
@@ -271,23 +318,23 @@ const HomeScreen = () => {
         
         var tempLight1 = parseInt(dataLightChart1.slice(-1)[0]);
 
-        //
-        // var resultCheck = checkAlert(
-        //   tempTemperature,
-        //   tempSoilMoiture,
-        //   tempLight,
-        //   tempSalinity
-        // );
+        
+        var resultCheck = checkAlert(
+          tempTemperature,
+          tempSoilMoiture,
+          tempLight,
+          tempSalinity
+        );
         //Cập nhật trạng thái
         await setIotDataFromAPI({
           temperature: tempTemperature,
           dissolveOxy: tempLight,
           pH: tempSoilMoiture,
           salinity: tempSalinity,
-          // isAlertTemperature: resultCheck.isTemperatureAlert,
-          // isAlertLight: resultCheck.isDissolveOxyAlert,
-          // isAlertSoilMoiture: resultCheck.ispHAlert,
-          // isAlertSalinity: resultCheck.isSalinityAlert,
+          isAlertTemperature: resultCheck.isTemperatureAlert,
+          isAlertLight: resultCheck.isDissolveOxyAlert,
+          isAlertSoilMoiture: resultCheck.ispHAlert,
+          isAlertSalinity: resultCheck.isSalinityAlert,
           labelChart: labelChart,
           dataChartTemperature: dataTemperatureChart1,
           dataChartDissolveOxy: dataSoilMoitureChart1,
@@ -300,10 +347,10 @@ const HomeScreen = () => {
           dissolveOxy: tempLight1,
           pH: tempSoilMoiture1,
           salinity: tempSalinity1,
-          // isAlertTemperature: resultCheck.isTemperatureAlert,
-          // isAlertLight: resultCheck.isDissolveOxyAlert,
-          // isAlertSoilMoiture: resultCheck.ispHAlert,
-          // isAlertSalinity: resultCheck.isSalinityAlert,
+          isAlertTemperature: resultCheck.isTemperatureAlert,
+          isAlertLight: resultCheck.isDissolveOxyAlert,
+          isAlertSoilMoiture: resultCheck.ispHAlert,
+          isAlertSalinity: resultCheck.isSalinityAlert,
           labelChart: labelChart1,
           dataChartTemperature: dataTemperatureChart,
           dataChartDissolveOxy: dataSoilMoitureChart,
@@ -328,7 +375,7 @@ const HomeScreen = () => {
   useEffect(() =>{
     const fetchData2 = async () => {
       intervalRef.current = setInterval(async () => {
-        mockDateTimeSecond = DateTime.now().second;
+        // let mockDateTimeSecond = DateTime.now().second;
         await fectchAPI1();
         console.log("Dang fetchApi");
       }, Constant.timeSamplingData);
@@ -353,16 +400,13 @@ const HomeScreen = () => {
   }, [selectedOption, iotDataFromAPI, iotDataRender, iotDataFromAPI1]);
 
   //set Alert
-  // useEffect(() => {
-  //   showAlert();
-  // }, [iotDataRender]);
-
+  
   return (
     <div
       className="app"
       style={{
         width: "100%",
-        backgroundColor: "#E7E8E9",
+        backgroundColor: "#9a9ed5",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -548,7 +592,7 @@ const HomeScreen = () => {
           backgroundColor: "red",
         }}
       ></div>
-      {/* <div
+      <div
         style={{
           display: "flex",
           flexDirection: "column",
@@ -560,7 +604,7 @@ const HomeScreen = () => {
         <Switch onChange={handleSwitchPopupChange} checked={isEnabledAlert} />
         <h3>Tắt âm thanh cảnh báo</h3>
         <Switch onChange={handleSwitchMute} checked={isMute} />
-      </div> */}
+      </div>
       <div
         style={{
           height: 50,
@@ -572,9 +616,9 @@ const HomeScreen = () => {
 };
 export default HomeScreen;
 
-const customStyles = {
-  control: () => ({
-    width: 200,
-    fontSize: 30,
-  }),
-};
+// const customStyles = {
+//   control: () => ({
+//     width: 200,
+//     fontSize: 30,
+//   }),
+// };

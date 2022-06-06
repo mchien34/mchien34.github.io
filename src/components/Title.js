@@ -9,7 +9,7 @@ export default function Title() {
         height: 80,
         width: 1100,
         display: "flex",
-        backgroundColor: "white",
+        backgroundColor: "#fff",
         boxShadow: "2px 5px 10px #C7C8C9FF",
         borderRadius: "10px",
         alignItems: "center",

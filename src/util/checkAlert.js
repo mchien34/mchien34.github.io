@@ -16,11 +16,15 @@ export function checkAlert(temperature, dissolveOxy, pH, salinity) {
     tempIsAlertTemperature = 1;
   }
 
-  //Đặc thù range của Oxy nó hơi khác
+
   var tempIsAlertDissolveOxy;
-  if (dissolveOxy < Constant.dissolveOxyLowLow) {
+  if (dissolveOxy > Constant.dissolveOxyHighHigh ||
+      dissolveOxy < Constant.dissolveOxyLowLow
+      ){
     tempIsAlertDissolveOxy = 2;
-  } else if (dissolveOxy > Constant.dissolveOxyLow) {
+  } else if (
+    dissolveOxy < Constant.dissolveOxyHigh &&
+    dissolveOxy > Constant.dissolveOxyLow) {
     tempIsAlertDissolveOxy = 0;
   } else {
     tempIsAlertDissolveOxy = 1;

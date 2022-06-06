@@ -61,11 +61,11 @@ Chart.register(
   zoomPlugin
 );
 const LineChart = (props) => {
-  const MockData = MockTest;
-  const dataObjs = MockTest.feeds;
-  const label = dataObjs.map((dataObj) => new Date(dataObj.created_at));
-  const data = dataObjs.map((dataObj) => dataObj.field1);
-  var timeFormat = "DD/MM/YYYY";
+  // const MockData = MockTest;
+  // const dataObjs = MockTest.feeds;
+  // const label = dataObjs.map((dataObj) => new Date(dataObj.created_at));
+  // const data = dataObjs.map((dataObj) => dataObj.field1);
+  // var timeFormat = "DD/MM/YYYY";
   return (
     <div
       style={{
