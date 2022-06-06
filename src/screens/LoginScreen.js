@@ -69,7 +69,7 @@ function LoginScreen() {
           <AlertMessageLogin info={alert} />
           <Form.Group>
             <Form.Control
-              type="text"
+              type="email"
               placeholder="Username"
               name="username"
               required
