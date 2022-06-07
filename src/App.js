@@ -16,7 +16,7 @@ const App = () => {
     password: "",
   });
   const { username, password } = loginForm;
-
+  console.log('hello');
   const onChangeLoginForm = (event) => {
     setAlert(null);
     setLoginForm({ ...loginForm, [event.target.name]: event.target.value });
