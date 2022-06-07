@@ -6,7 +6,7 @@ import warning_icon from "./../assets/warning.png";
 import warning_red_icon from "./../assets/warning_red.png";
 import { ColorConstant } from "../value/color_constant";
 import { Constant } from "../value/constant";
-import pop_mp3 from "./../assets/pop.mp3";
+
 import error_mp3 from "./../assets/error.mp3";
 // import 'reactjs-popup/dist/index.css';
 function AlertPopup(sensor, title, isMute) {
